@@ -1,0 +1,26 @@
+﻿<Window x:Class="HARD.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:autod="clr-namespace:HARD.View.AutoD"
+        xmlns:linker="clr-namespace:HARD.View.Linker"
+        mc:Ignorable="d"
+        Title="HARD" Height="600" Width="800" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <TabControl>
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="AutoD"/>
+                </TabItem.Header>
+                <autod:AutoD_View/>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="Linker"/>
+                </TabItem.Header>
+                <linker:Linker_View/>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
