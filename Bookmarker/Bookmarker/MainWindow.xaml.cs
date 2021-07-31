@@ -1,17 +1,12 @@
 ﻿using System.Windows;
 
-namespace HARD
+namespace Bookmarker
 {
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
-            Config.AutoD_Config.Instance.Load();
-            Config.Linker_Config.Instance.Load();
-
             InitializeComponent();
-
-            Topmost = true;
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿<Application x:Class="HARD.App"
+﻿<Application x:Class="Bookmarker.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:HARD"
+             xmlns:local="clr-namespace:Bookmarker"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          
