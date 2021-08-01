@@ -7,11 +7,13 @@ namespace Bookmarker
 {
     public class ConfigStruct
     {
+        public bool isChrome { get; set; }
         public string nickname { get; set; }
         public string path { get; set; }
 
-        public ConfigStruct(string nickname, string path)
+        public ConfigStruct(bool isChrome, string nickname, string path)
         {
+            this.isChrome = isChrome;
             this.nickname = nickname;
             this.path = path;
         }
@@ -43,7 +45,7 @@ namespace Bookmarker
         {
             if (File.Exists(_configPath)) return;
 
-            _configData.Add(new ConfigStruct("Default", "D:\\"));
+            _configData.Add(new ConfigStruct(false, "Default", "D:\\"));
 
             Save();
         }

@@ -66,6 +66,17 @@ namespace Bookmarker.ViewModel
             }
         }
 
+        private bool _inputIsChrome;
+        public bool inputIsChrome
+        {
+            get { return _inputIsChrome; }
+            set
+            {
+                _inputIsChrome = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _inputNickname;
         public string inputNickname
         {
@@ -103,13 +114,14 @@ namespace Bookmarker.ViewModel
 
         public MainBookmarkerViewModel()
         {
-            dgData = new ObservableCollection<ConfigStruct>(Config.Instance.ConfigData);
+            DataGridBinding();
         }
 
         private void Reset()
         {
             dgData = new ObservableCollection<ConfigStruct>();
 
+            inputIsChrome = false;
             inputNickname = string.Empty;
             inputPath = string.Empty;
         }
@@ -131,7 +143,7 @@ namespace Bookmarker.ViewModel
         {
             if (string.IsNullOrWhiteSpace(inputNickname) || string.IsNullOrWhiteSpace(inputPath)) return;
 
-            var input = new ConfigStruct(inputNickname, inputPath);
+            var input = new ConfigStruct(inputIsChrome, inputNickname, inputPath);
 
             Config.Instance.ConfigData.Add(input);
 
@@ -155,16 +167,44 @@ namespace Bookmarker.ViewModel
         private void Load()
         {
             Config.Instance.Load();
+
+            DataGridBinding();
+        }
+
+        private void DataGridBinding()
+        {
+            dgData = new ObservableCollection<ConfigStruct>(Config.Instance.ConfigData);
+        }
+
+        enum WebBrowser
+        {
+            chrome,
+            iexplore
         }
 
         public void Operation(ConfigStruct data)
         {
             try
             {
+                if (data == null) return;
+
                 var process = new Process();
-                process.StartInfo.FileName = data.path;
-                process.StartInfo.UseShellExecute = true;
-                process.Start();
+
+                if (data.path.ToUpper().Contains("HTTP"))
+                {
+                    var webBrowser = data.isChrome ? nameof(WebBrowser.chrome) : nameof(WebBrowser.iexplore);
+
+                    process.StartInfo.FileName = webBrowser;
+                    process.StartInfo.Arguments = $@"{data.path}";
+                    process.StartInfo.UseShellExecute = true;
+                    process.Start();
+                }
+                else
+                {
+                    process.StartInfo.FileName = $@"{data.path}";
+                    process.StartInfo.UseShellExecute = true;
+                    process.Start();
+                }
             }
             catch
             {

@@ -26,5 +26,10 @@ namespace Bookmarker.View
 
             dataGrid.UnselectAll();
         }
+
+        private void dataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            e.Cancel = true;
+        }
     }
 }

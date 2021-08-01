@@ -1,6 +1,27 @@
-﻿[
+﻿//{
+//  "BookMarker":
+//  [
+//    {
+//      "isChrome": false,
+//      "nickname": "Default",
+//      "path": "D:/"
+//    },
+//    {
+//      "isChrome": false,
+//      "nickname": "Naver",
+//      "path": "http://naver.com"
+//    }
+//  ]
+//}
+[
   {
+    "isChrome": false,
     "nickname": "Default",
     "path": "D:/"
+  },
+  {
+    "isChrome": false,
+    "nickname": "Naver",
+    "path": "http://naver.com"
   }
 ]
