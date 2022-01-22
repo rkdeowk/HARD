@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="1400">
     <Grid>
 
         <Grid.ColumnDefinitions>
@@ -33,8 +33,8 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <Label Margin="2" Grid.Row="0" Content="Name"/>
@@ -43,8 +43,8 @@
                 <Label Margin="2" Grid.Row="3" Content="Maker"/>
                 <Label Margin="2" Grid.Row="4" Content="EquipName"/>
                 <Label Margin="2" Grid.Row="5" Content="EquipID"/>
-                <Label Margin="2" Grid.Row="6" Content="ReceivingDay"/>
-                <Label Margin="2" Grid.Row="7" Content="Description"/>
+                <Label Margin="2" Grid.Row="6" Content="Description&#10;(use comma)"/>
+                <Label Margin="2" Grid.Row="7" Content="ReceivingDay"/>
 
                 <TextBox Margin="2" Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
                 <TextBox Margin="2" Grid.Row="1" Grid.Column="1" Text="{Binding SerialNum}"/>
@@ -52,9 +52,8 @@
                 <TextBox Margin="2" Grid.Row="3" Grid.Column="1" Text="{Binding Maker}"/>
                 <TextBox Margin="2" Grid.Row="4" Grid.Column="1" Text="{Binding EquipName}"/>
                 <TextBox Margin="2" Grid.Row="5" Grid.Column="1" Text="{Binding EquipID}"/>
-                <DatePicker Margin="2" Grid.Row="6" Grid.Column="1" SelectedDate="{Binding ReceivingDay}" Focusable="False"/>
-
-                <TextBox Margin="2" Grid.Row="7" Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" AcceptsReturn="True"/>
+                <TextBox Margin="2" Grid.Row="6" Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" Cursor="IBeam"/>
+                <DatePicker Margin="2" Grid.Row="7" Grid.Column="1" SelectedDate="{Binding ReceivingDay}" Focusable="False"/>
 
             </Grid>
 
@@ -122,8 +121,8 @@
                     <DataGridTextColumn Header="Maker" Binding="{Binding Maker}"/>
                     <DataGridTextColumn Header="EquipName" Binding="{Binding EquipName}"/>
                     <DataGridTextColumn Header="EquipID" Binding="{Binding EquipID}"/>
-                    <DataGridTextColumn Header="ReceivingDay" Binding="{Binding ReceivingDay}"/>
                     <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
+                    <DataGridTextColumn Header="ReceivingDay" Binding="{Binding ReceivingDay}"/>
                 </DataGrid.Columns>
 
             </DataGrid>

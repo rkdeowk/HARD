@@ -79,8 +79,8 @@ namespace InventoryManagement.ViewModel
                 Maker = value.Maker;
                 EquipName = value.EquipName;
                 EquipID = value.EquipID;
-                ReceivingDay = value.ReceivingDay;
                 Description = value.Description;
+                ReceivingDay = value.ReceivingDay;
 
                 _selectedDgData = value;
                 OnPropertyChanged();
@@ -153,6 +153,17 @@ namespace InventoryManagement.ViewModel
             }
         }
 
+        private string _Description;
+        public string Description
+        {
+            get { return _Description; }
+            set
+            {
+                _Description = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _ReceivingDay;
         public string ReceivingDay
         {
@@ -161,17 +172,6 @@ namespace InventoryManagement.ViewModel
             {
                 if (string.IsNullOrWhiteSpace(value)) return;
                 _ReceivingDay = DateTime.Parse(value).ToString("yyyy-MM/dd");
-                OnPropertyChanged();
-            }
-        }
-
-        private string _Description;
-        public string Description
-        {
-            get { return _Description; }
-            set
-            {
-                _Description = value;
                 OnPropertyChanged();
             }
         }
@@ -219,10 +219,10 @@ namespace InventoryManagement.ViewModel
             public string Maker { get; set; }
             public string EquipName { get; set; }
             public string EquipID { get; set; }
-            public string ReceivingDay { get; set; }
             public string Description { get; set; }
+            public string ReceivingDay { get; set; }
 
-            public Product(string Name, string SerialNum, string Location, string Maker, string EquipName, string EquipID, string ReceivingDay, string Description)
+            public Product(string Name, string SerialNum, string Location, string Maker, string EquipName, string EquipID, string Description, string ReceivingDay)
             {
                 this.Name = Name;
                 this.SerialNum = SerialNum;
@@ -230,8 +230,8 @@ namespace InventoryManagement.ViewModel
                 this.Maker = Maker;
                 this.EquipName = EquipName;
                 this.EquipID = EquipID;
-                this.ReceivingDay = ReceivingDay;
                 this.Description = Description;
+                this.ReceivingDay = ReceivingDay;
             }
 
             public Product() { }
@@ -300,7 +300,7 @@ namespace InventoryManagement.ViewModel
                 return;
             }
 
-            var product = new Product(Name, SerialNum, Location, Maker, EquipName, EquipID, ReceivingDay, Description);
+            var product = new Product(Name, SerialNum, Location, Maker, EquipName, EquipID, Description, ReceivingDay);
 
             foreach (var item in original)
             {
@@ -336,8 +336,8 @@ namespace InventoryManagement.ViewModel
                 $"Maker : {selectedDgData.Maker}\n" +
                 $"EquipName : {selectedDgData.EquipName}\n" +
                 $"EquipID : {selectedDgData.EquipID}\n" +
-                $"ReceivingDay : {selectedDgData.ReceivingDay}\n" +
-                $"Description : {selectedDgData.Description}\n\n" + "정말 삭제하시겠습니까?";
+                $"Description : {selectedDgData.Description}\n\n" +
+                $"ReceivingDay : {selectedDgData.ReceivingDay}\n" + "정말 삭제하시겠습니까?";
 
             if (MessageBox.Show(msg, "정말로 삭제요?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
@@ -374,8 +374,13 @@ namespace InventoryManagement.ViewModel
                 switch (selectedComboBox)
                 {
                     case "All":
-                        dgData = new ObservableCollection<Product>(original);
-                        return;
+                        if (original[i].Name.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
+                        else if (original[i].SerialNum.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
+                        else if (original[i].Location.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
+                        else if (original[i].Maker.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
+                        else if (original[i].EquipName.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
+                        else if (original[i].EquipID.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
+                        break;
 
                     case nameof(Product.Name):
                         if (original[i].Name.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
@@ -427,8 +432,8 @@ namespace InventoryManagement.ViewModel
             product.Maker = s[idx++];
             product.EquipName = s[idx++];
             product.EquipID = s[idx++];
-            product.ReceivingDay = s[idx++];
             product.Description = s[idx++];
+            product.ReceivingDay = s[idx++];
 
             return product;
         }
@@ -441,8 +446,8 @@ namespace InventoryManagement.ViewModel
             if (p1.Maker != p2.Maker) return false;
             if (p1.EquipName != p2.EquipName) return false;
             if (p1.EquipID != p2.EquipID) return false;
-            if (p1.ReceivingDay != p2.ReceivingDay) return false;
             if (p1.Description != p2.Description) return false;
+            if (p1.ReceivingDay != p2.ReceivingDay) return false;
             return true;
         }
     }
