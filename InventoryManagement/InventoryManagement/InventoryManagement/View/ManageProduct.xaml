@@ -1,0 +1,134 @@
+﻿<UserControl x:Class="InventoryManagement.View.ManageProduct"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Margin="5">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label Margin="2" Grid.Row="0" Content="Name"/>
+                <Label Margin="2" Grid.Row="1" Content="SerialNum"/>
+                <Label Margin="2" Grid.Row="2" Content="Location"/>
+                <Label Margin="2" Grid.Row="3" Content="Maker"/>
+                <Label Margin="2" Grid.Row="4" Content="EquipName"/>
+                <Label Margin="2" Grid.Row="5" Content="EquipID"/>
+                <Label Margin="2" Grid.Row="6" Content="ReceivingDay"/>
+                <Label Margin="2" Grid.Row="7" Content="Description"/>
+
+                <TextBox Margin="2" Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
+                <TextBox Margin="2" Grid.Row="1" Grid.Column="1" Text="{Binding SerialNum}"/>
+                <TextBox Margin="2" Grid.Row="2" Grid.Column="1" Text="{Binding Location}"/>
+                <TextBox Margin="2" Grid.Row="3" Grid.Column="1" Text="{Binding Maker}"/>
+                <TextBox Margin="2" Grid.Row="4" Grid.Column="1" Text="{Binding EquipName}"/>
+                <TextBox Margin="2" Grid.Row="5" Grid.Column="1" Text="{Binding EquipID}"/>
+                <DatePicker Margin="2" Grid.Row="6" Grid.Column="1" SelectedDate="{Binding ReceivingDay}"/>
+
+                <TextBox Margin="2" Grid.Row="7" Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" AcceptsReturn="True"/>
+
+            </Grid>
+
+            <Grid Grid.Row="1">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Button Margin="5" Grid.Row="0" Grid.Column="0" Content="Add" Command="{Binding AddCommand}"/>
+                <Button Margin="5" Grid.Row="0" Grid.Column="1" Content="Save" Command="{Binding SaveCommand}"/>
+                <Button Margin="5" Grid.Row="1" Grid.Column="0" Content="Delete" Command="{Binding DeleteCommand}"/>
+                <Button Margin="5" Grid.Row="1" Grid.Column="1" Content="Export" Command="{Binding ExportCommand}"/>
+            </Grid>
+
+        </Grid>
+
+        <Grid Grid.Column="1">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="80"/>
+                </Grid.ColumnDefinitions>
+
+
+                <ComboBox Margin="5" ItemsSource="{Binding searchItem}" SelectedItem="{Binding Path=selectedComboBox}"/>
+                <TextBox Margin="5" Grid.Column="1" Text="{Binding searchData, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBox.InputBindings>
+                        <KeyBinding Command="{Binding SearchCommand}" Key="Return"/>
+                    </TextBox.InputBindings>
+                </TextBox>
+
+                <Button Margin="5" Grid.Column="2" Content="Search" Command="{Binding SearchCommand}"/>
+                <Button Margin="5" Grid.Column="3" Content="Reset" Command="{Binding ResetCommand}"/>
+
+            </Grid>
+
+            <DataGrid Margin="5" x:Name="dataGrid" Grid.Row="1"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding dgData}"
+                  SelectedItem="{Binding selectedDgData}"
+                  IsReadOnly="True"
+                  SelectionMode="Single">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="SerialNum" Binding="{Binding SerialNum}"/>
+                    <DataGridTextColumn Header="Location" Binding="{Binding Location}"/>
+                    <DataGridTextColumn Header="Maker" Binding="{Binding Maker}"/>
+                    <DataGridTextColumn Header="EquipName" Binding="{Binding EquipName}"/>
+                    <DataGridTextColumn Header="EquipID" Binding="{Binding EquipID}"/>
+                    <DataGridTextColumn Header="ReceivingDay" Binding="{Binding ReceivingDay}"/>
+                    <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
+                </DataGrid.Columns>
+
+            </DataGrid>
+
+        </Grid>
+
+    </Grid>
+</UserControl>

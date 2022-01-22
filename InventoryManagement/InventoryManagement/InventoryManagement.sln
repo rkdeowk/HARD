@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31105.61
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperChat", "SuperChat\SuperChat.csproj", "{5FB575F4-A34D-4C6F-BAEC-B6E0CFC3D662}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagement", "InventoryManagement\InventoryManagement.csproj", "{1C0AC7C5-EE2B-486D-A215-E82C599EB3DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5FB575F4-A34D-4C6F-BAEC-B6E0CFC3D662}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5FB575F4-A34D-4C6F-BAEC-B6E0CFC3D662}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5FB575F4-A34D-4C6F-BAEC-B6E0CFC3D662}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5FB575F4-A34D-4C6F-BAEC-B6E0CFC3D662}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C0AC7C5-EE2B-486D-A215-E82C599EB3DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C0AC7C5-EE2B-486D-A215-E82C599EB3DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C0AC7C5-EE2B-486D-A215-E82C599EB3DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C0AC7C5-EE2B-486D-A215-E82C599EB3DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {52799BF5-B008-4174-909D-4BE04C2A31EB}
+		SolutionGuid = {1CD83641-B507-47F7-A34F-C589BC2FCD6F}
 	EndGlobalSection
 EndGlobal
