@@ -378,27 +378,27 @@ namespace InventoryManagement.ViewModel
                         return;
 
                     case nameof(Product.Name):
-                        if (original[i].Name == searchData) ov.Add(original[i]);
+                        if (original[i].Name.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
                         break;
 
                     case nameof(Product.SerialNum):
-                        if (original[i].SerialNum == searchData) ov.Add(original[i]);
+                        if (original[i].SerialNum.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
                         break;
 
                     case nameof(Product.Location):
-                        if (original[i].Location == searchData) ov.Add(original[i]);
+                        if (original[i].Location.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
                         break;
 
                     case nameof(Product.Maker):
-                        if (original[i].Maker == searchData) ov.Add(original[i]);
+                        if (original[i].Maker.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
                         break;
 
                     case nameof(Product.EquipName):
-                        if (original[i].EquipName == searchData) ov.Add(original[i]);
+                        if (original[i].EquipName.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
                         break;
 
                     case nameof(Product.EquipID):
-                        if (original[i].EquipID == searchData) ov.Add(original[i]);
+                        if (original[i].EquipID.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
                         break;
 
                     default:
