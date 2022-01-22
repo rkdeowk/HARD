@@ -71,6 +71,17 @@ namespace InventoryManagement.ViewModel
             get { return _selectedDgData; }
             set
             {
+                if (value is null) return;
+
+                Name = value.Name;
+                SerialNum = value.SerialNum;
+                Location = value.Location;
+                Maker = value.Maker;
+                EquipName = value.EquipName;
+                EquipID = value.EquipID;
+                ReceivingDay = value.ReceivingDay;
+                Description = value.Description;
+
                 _selectedDgData = value;
                 OnPropertyChanged();
             }
@@ -148,6 +159,7 @@ namespace InventoryManagement.ViewModel
             get { return _ReceivingDay; }
             set
             {
+                if (string.IsNullOrWhiteSpace(value)) return;
                 _ReceivingDay = DateTime.Parse(value).ToString("yyyy-MM/dd");
                 OnPropertyChanged();
             }
@@ -288,8 +300,19 @@ namespace InventoryManagement.ViewModel
                 return;
             }
 
-            dgData.Add(new Product(Name, SerialNum, Location, Maker, EquipName, EquipID, ReceivingDay, Description));
-            original.Add(new Product(Name, SerialNum, Location, Maker, EquipName, EquipID, ReceivingDay, Description));
+            var product = new Product(Name, SerialNum, Location, Maker, EquipName, EquipID, ReceivingDay, Description);
+
+            foreach (var item in original)
+            {
+                if (CheckEqual(item, product))
+                {
+                    MessageBox.Show("중복되는 물품이 있으니 다른 값으로 변경해주세요");
+                    return;
+                }
+            }
+
+            dgData.Add(product);
+            original.Add(product);
         }
 
         private void Save()
@@ -408,6 +431,19 @@ namespace InventoryManagement.ViewModel
             product.Description = s[idx++];
 
             return product;
+        }
+
+        private bool CheckEqual(Product p1, Product p2)
+        {
+            if (p1.Name != p2.Name) return false;
+            if (p1.SerialNum != p2.SerialNum) return false;
+            if (p1.Location != p2.Location) return false;
+            if (p1.Maker != p2.Maker) return false;
+            if (p1.EquipName != p2.EquipName) return false;
+            if (p1.EquipID != p2.EquipID) return false;
+            if (p1.ReceivingDay != p2.ReceivingDay) return false;
+            if (p1.Description != p2.Description) return false;
+            return true;
         }
     }
 }

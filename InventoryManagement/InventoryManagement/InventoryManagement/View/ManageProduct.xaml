@@ -91,8 +91,8 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="120"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="80"/>
-                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
 
 
@@ -112,8 +112,8 @@
                   AutoGenerateColumns="False"
                   ItemsSource="{Binding dgData}"
                   SelectedItem="{Binding selectedDgData}"
-                  IsReadOnly="True"
-                  SelectionMode="Single">
+                  SelectionMode="Single"
+                  IsReadOnly="True">
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
