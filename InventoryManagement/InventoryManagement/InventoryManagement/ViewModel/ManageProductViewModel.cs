@@ -253,8 +253,8 @@ namespace InventoryManagement.ViewModel
 
         private void init()
         {
-            logPath = Environment.CurrentDirectory + @"\log.csv";
-            backupPath = @$"{Environment.CurrentDirectory}\backup";
+            logPath = $@"{Environment.CurrentDirectory}\log.csv";
+            backupPath = @$"{Environment.CurrentDirectory}\backupLog";
 
             dgData = new ObservableCollection<Product>();
             original = new ObservableCollection<Product>();
