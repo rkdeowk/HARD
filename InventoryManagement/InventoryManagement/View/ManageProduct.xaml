@@ -12,7 +12,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid Margin="5">
+        <Grid Margin="10">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -43,7 +43,7 @@
                 <Label Margin="2" Grid.Row="3" Content="Maker"/>
                 <Label Margin="2" Grid.Row="4" Content="EquipName"/>
                 <Label Margin="2" Grid.Row="5" Content="EquipID"/>
-                <Label Margin="2" Grid.Row="6" Content="Description&#10;(use comma)"/>
+                <Label Margin="2" Grid.Row="6" Content="Description&#10;(use dot.)"/>
                 <Label Margin="2" Grid.Row="7" Content="ReceivingDay"/>
 
                 <TextBox Margin="2" Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
@@ -78,7 +78,7 @@
 
         </Grid>
 
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1" Margin="10">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>

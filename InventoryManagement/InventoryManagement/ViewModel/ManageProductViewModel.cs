@@ -237,6 +237,11 @@ namespace InventoryManagement.ViewModel
             public Product() { }
         }
 
+        public class SearchItems
+        {
+            public string All, Name, SerialNum, Location, Maker, EquipName, EquipID;
+        }
+
         ObservableCollection<Product> original;
 
         private string logPath;
@@ -278,17 +283,15 @@ namespace InventoryManagement.ViewModel
 
         private void MakeComboBox()
         {
-            List<string> item = new List<string>();
+            List<string> comboBoxItem = new List<string>();
 
-            item.Add("All");
-            item.Add("Name");
-            item.Add("SerialNum");
-            item.Add("Location");
-            item.Add("Maker");
-            item.Add("EquipName");
-            item.Add("EquipID");
+            var fieldInfos = typeof(SearchItems).GetFields();
+            foreach (var field in fieldInfos)
+            {
+                comboBoxItem.Add(field.Name);
+            }
 
-            searchItem = new ObservableCollection<string>(item);
+            searchItem = new ObservableCollection<string>(comboBoxItem);
             selectedComboBox = "All";
         }
 
@@ -329,15 +332,14 @@ namespace InventoryManagement.ViewModel
         {
             if (selectedDgData == null) return;
 
-            string msg =
-                $"Name : {selectedDgData.Name}\n" +
-                $"SerialNum : {selectedDgData.SerialNum}\n" +
-                $"Location : {selectedDgData.Location}\n" +
-                $"Maker : {selectedDgData.Maker}\n" +
-                $"EquipName : {selectedDgData.EquipName}\n" +
-                $"EquipID : {selectedDgData.EquipID}\n" +
-                $"Description : {selectedDgData.Description}\n\n" +
-                $"ReceivingDay : {selectedDgData.ReceivingDay}\n" + "정말 삭제하시겠습니까?";
+            string msg = string.Empty;
+
+            var propertyInfos = typeof(Product).GetProperties();
+            foreach (var property in propertyInfos)
+            {
+                msg += $"{property.Name} : {property.GetValue(selectedDgData, null)}\n";
+            }
+            msg += "\n정말 삭제하시겠습니까?";
 
             if (MessageBox.Show(msg, "정말로 삭제요?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
@@ -373,7 +375,7 @@ namespace InventoryManagement.ViewModel
             {
                 switch (selectedComboBox)
                 {
-                    case "All":
+                    case nameof(SearchItems.All):
                         if (original[i].Name.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
                         else if (original[i].SerialNum.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
                         else if (original[i].Location.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
@@ -382,27 +384,27 @@ namespace InventoryManagement.ViewModel
                         else if (original[i].EquipID.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
                         break;
 
-                    case nameof(Product.Name):
+                    case nameof(SearchItems.Name):
                         if (original[i].Name.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
                         break;
 
-                    case nameof(Product.SerialNum):
+                    case nameof(SearchItems.SerialNum):
                         if (original[i].SerialNum.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
                         break;
 
-                    case nameof(Product.Location):
+                    case nameof(SearchItems.Location):
                         if (original[i].Location.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
                         break;
 
-                    case nameof(Product.Maker):
+                    case nameof(SearchItems.Maker):
                         if (original[i].Maker.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
                         break;
 
-                    case nameof(Product.EquipName):
+                    case nameof(SearchItems.EquipName):
                         if (original[i].EquipName.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
                         break;
 
-                    case nameof(Product.EquipID):
+                    case nameof(SearchItems.EquipID):
                         if (original[i].EquipID.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
                         break;
 
@@ -422,32 +424,29 @@ namespace InventoryManagement.ViewModel
         private Product ConvertStringToProduct(string str)
         {
             Product product = new Product();
-
             var s = str.Split(',');
-
             int idx = 0;
-            product.Name = s[idx++];
-            product.SerialNum = s[idx++];
-            product.Location = s[idx++];
-            product.Maker = s[idx++];
-            product.EquipName = s[idx++];
-            product.EquipID = s[idx++];
-            product.Description = s[idx++];
-            product.ReceivingDay = s[idx++];
+
+            var propertyInfos = typeof(Product).GetProperties();
+            foreach (var property in propertyInfos)
+            {
+                property.SetValue(product, s[idx++]);
+            }
 
             return product;
         }
 
         private bool CheckEqual(Product p1, Product p2)
         {
-            if (p1.Name != p2.Name) return false;
-            if (p1.SerialNum != p2.SerialNum) return false;
-            if (p1.Location != p2.Location) return false;
-            if (p1.Maker != p2.Maker) return false;
-            if (p1.EquipName != p2.EquipName) return false;
-            if (p1.EquipID != p2.EquipID) return false;
-            if (p1.Description != p2.Description) return false;
-            if (p1.ReceivingDay != p2.ReceivingDay) return false;
+            var propertyInfos = typeof(Product).GetProperties();
+
+            foreach (var property in propertyInfos)
+            {
+                var a = property.GetValue(p1, null) == null ? "" : property.GetValue(p1, null).ToString();
+                var b = property.GetValue(p1, null) == null ? "" : property.GetValue(p2, null).ToString();
+                if (a != b) return false;
+
+            }
             return true;
         }
     }
