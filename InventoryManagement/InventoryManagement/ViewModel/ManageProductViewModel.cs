@@ -44,10 +44,10 @@ namespace InventoryManagement.ViewModel
             get { return (_searchCommand) ?? (_searchCommand = new RelayCommand(Search)); }
         }
 
-        private ICommand _resetCommand;
-        public ICommand ResetCommand
+        private ICommand _refreshCommand;
+        public ICommand RefreshCommand
         {
-            get { return (_resetCommand) ?? (_resetCommand = new RelayCommand(Reset)); }
+            get { return (_refreshCommand) ?? (_refreshCommand = new RelayCommand(Refresh)); }
         }
 
         #endregion
@@ -79,8 +79,8 @@ namespace InventoryManagement.ViewModel
                 Maker = value.Maker;
                 EquipName = value.EquipName;
                 EquipID = value.EquipID;
-                Description = value.Description;
                 ReceivingDay = value.ReceivingDay;
+                Description = value.Description;
 
                 _selectedDgData = value;
                 OnPropertyChanged();
@@ -153,17 +153,6 @@ namespace InventoryManagement.ViewModel
             }
         }
 
-        private string _Description;
-        public string Description
-        {
-            get { return _Description; }
-            set
-            {
-                _Description = value;
-                OnPropertyChanged();
-            }
-        }
-
         private string _ReceivingDay;
         public string ReceivingDay
         {
@@ -172,6 +161,17 @@ namespace InventoryManagement.ViewModel
             {
                 if (string.IsNullOrWhiteSpace(value)) return;
                 _ReceivingDay = DateTime.Parse(value).ToString("yyyy-MM/dd");
+                OnPropertyChanged();
+            }
+        }
+
+        private string _Description;
+        public string Description
+        {
+            get { return _Description; }
+            set
+            {
+                _Description = value;
                 OnPropertyChanged();
             }
         }
@@ -219,19 +219,19 @@ namespace InventoryManagement.ViewModel
             public string Maker { get; set; }
             public string EquipName { get; set; }
             public string EquipID { get; set; }
-            public string Description { get; set; }
             public string ReceivingDay { get; set; }
+            public string Description { get; set; }
 
-            public Product(string Name, string SerialNum, string Location, string Maker, string EquipName, string EquipID, string Description, string ReceivingDay)
+            public Product(string Name, string SerialNum, string Location, string Maker, string EquipName, string EquipID, string ReceivingDay, string Description)
             {
-                this.Name = Name;
-                this.SerialNum = SerialNum;
-                this.Location = Location;
-                this.Maker = Maker;
-                this.EquipName = EquipName;
-                this.EquipID = EquipID;
-                this.Description = Description;
-                this.ReceivingDay = ReceivingDay;
+                this.Name = Name != null ? Name : "";
+                this.SerialNum = SerialNum != null ? SerialNum : "";
+                this.Location = Location != null ? Location : "";
+                this.Maker = Maker != null ? Maker : "";
+                this.EquipName = EquipName != null ? EquipName : "";
+                this.EquipID = EquipID != null ? EquipID : "";
+                this.ReceivingDay = ReceivingDay != null ? ReceivingDay : "";
+                this.Description = Description != null ? Description : "";
             }
 
             public Product() { }
@@ -251,14 +251,16 @@ namespace InventoryManagement.ViewModel
         {
             init();
 
-            var db = DataHandler.ReadCsv(logPath);
-            if (db.Count > 0) db.RemoveAt(0);
-
-            BindingDataGrid(db);
+            BindingDataGrid();
         }
 
-        private void BindingDataGrid(List<string> data)
+        private void BindingDataGrid()
         {
+            dgData = new ObservableCollection<Product>();
+            original = new ObservableCollection<Product>();
+
+            var data = DataHandler.ReadCsv(logPath);
+            if (data.Count > 0) data.RemoveAt(0);
 
             for (int i = 0; i < data.Count; i++)
             {
@@ -303,7 +305,7 @@ namespace InventoryManagement.ViewModel
                 return;
             }
 
-            var product = new Product(Name, SerialNum, Location, Maker, EquipName, EquipID, Description, ReceivingDay);
+            var product = new Product(Name, SerialNum, Location, Maker, EquipName, EquipID, ReceivingDay, Description);
 
             foreach (var item in original)
             {
@@ -330,21 +332,17 @@ namespace InventoryManagement.ViewModel
 
         private void Delete()
         {
-            if (selectedDgData == null) return;
-
-            string msg = string.Empty;
-
-            var propertyInfos = typeof(Product).GetProperties();
-            foreach (var property in propertyInfos)
+            if (CheckNull(selectedDgData))
             {
-                msg += $"{property.Name} : {property.GetValue(selectedDgData, null)}\n";
+                MessageBox.Show("지울 파일을 선택해주세요");
+                return;
             }
-            msg += "\n정말 삭제하시겠습니까?";
 
-            if (MessageBox.Show(msg, "정말로 삭제요?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show("정말 삭제하시겠습니까?", "정말로 삭제요?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 dgData.Remove(selectedDgData);
                 original.Remove(selectedDgData);
+                selectedDgData = new Product();
             }
         }
 
@@ -416,9 +414,9 @@ namespace InventoryManagement.ViewModel
             dgData = new ObservableCollection<Product>(ov);
         }
 
-        private void Reset()
+        private void Refresh()
         {
-            dgData = new ObservableCollection<Product>(original);
+            BindingDataGrid();
         }
 
         private Product ConvertStringToProduct(string str)
@@ -447,6 +445,20 @@ namespace InventoryManagement.ViewModel
                 if (a != b) return false;
 
             }
+            return true;
+        }
+
+        private bool CheckNull(Product product)
+        {
+            if (product == null) return true;
+
+            var propertyInfos = typeof(Product).GetProperties();
+
+            foreach (var property in propertyInfos)
+            {
+                if (property.GetValue(product, null) != null) return false;
+            }
+
             return true;
         }
     }

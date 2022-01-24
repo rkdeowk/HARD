@@ -49,7 +49,7 @@ namespace InventoryManagement.Data
         {
             try
             {
-                using (var sw = new StreamWriter(path))
+                using (var sw = new StreamWriter(path, false, Encoding.UTF8))
                 {
                     sw.WriteLine(data);
                 }
@@ -58,7 +58,7 @@ namespace InventoryManagement.Data
             {
                 Thread.Sleep(timeout);
 
-                using (var sw = new StreamWriter(path))
+                using (var sw = new StreamWriter(path, false, Encoding.UTF8))
                 {
                     sw.WriteLine(data);
                 }
@@ -69,7 +69,7 @@ namespace InventoryManagement.Data
         {
             try
             {
-                using (var sw = new StreamWriter(path))
+                using (var sw = new StreamWriter(path, false, Encoding.UTF8))
                 {
                     sw.WriteLine(ToCsv(objectlist));
                 }
@@ -78,7 +78,7 @@ namespace InventoryManagement.Data
             {
                 Thread.Sleep(timeout);
 
-                using (var sw = new StreamWriter(path))
+                using (var sw = new StreamWriter(path, false, Encoding.UTF8))
                 {
                     sw.WriteLine(ToCsv(objectlist));
                 }
