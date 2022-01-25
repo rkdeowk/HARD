@@ -1,10 +1,7 @@
 ﻿using InventoryManagement.Core;
 using InventoryManagement.Data;
-using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
@@ -50,12 +47,18 @@ namespace InventoryManagement.ViewModel
             get { return (_refreshCommand) ?? (_refreshCommand = new RelayCommand(Refresh)); }
         }
 
+        private ICommand _historyCommand;
+        public ICommand HistoryCommand
+        {
+            get { return (_historyCommand) ?? (_historyCommand = new RelayCommand(History)); }
+        }
+
         #endregion
 
         #region [ Binding ]
 
-        private ObservableCollection<Product> _dgData;
-        public ObservableCollection<Product> dgData
+        private ObservableCollection<Sensor> _dgData;
+        public ObservableCollection<Sensor> dgData
         {
             get { return _dgData; }
             set
@@ -65,8 +68,8 @@ namespace InventoryManagement.ViewModel
             }
         }
 
-        private Product _selectedDgData;
-        public Product selectedDgData
+        private Sensor _selectedDgData;
+        public Sensor selectedDgData
         {
             get { return _selectedDgData; }
             set
@@ -211,7 +214,7 @@ namespace InventoryManagement.ViewModel
 
         #endregion
 
-        public class Product
+        public class Sensor
         {
             public string Name { get; set; }
             public string SerialNum { get; set; }
@@ -222,7 +225,7 @@ namespace InventoryManagement.ViewModel
             public string ReceivingDay { get; set; }
             public string Description { get; set; }
 
-            public Product(string Name, string SerialNum, string Location, string Maker, string EquipName, string EquipID, string ReceivingDay, string Description)
+            public Sensor(string Name, string SerialNum, string Location, string Maker, string EquipName, string EquipID, string ReceivingDay, string Description)
             {
                 this.Name = Name != null ? Name : "";
                 this.SerialNum = SerialNum != null ? SerialNum : "";
@@ -234,7 +237,7 @@ namespace InventoryManagement.ViewModel
                 this.Description = Description != null ? Description : "";
             }
 
-            public Product() { }
+            public Sensor() { }
         }
 
         public class SearchItems
@@ -242,10 +245,7 @@ namespace InventoryManagement.ViewModel
             public string All, Name, SerialNum, Location, Maker, EquipName, EquipID;
         }
 
-        ObservableCollection<Product> original;
-
-        private string logPath;
-        private string backupPath;
+        ObservableCollection<Sensor> original;
 
         public ManageProductViewModel()
         {
@@ -256,44 +256,31 @@ namespace InventoryManagement.ViewModel
 
         private void BindingDataGrid()
         {
-            dgData = new ObservableCollection<Product>();
-            original = new ObservableCollection<Product>();
+            dgData = new ObservableCollection<Sensor>();
+            original = new ObservableCollection<Sensor>();
 
-            var data = DataHandler.ReadCsv(logPath);
+            var data = Log.ReadCsv(nameof(Sensor));
             if (data.Count > 0) data.RemoveAt(0);
 
             for (int i = 0; i < data.Count; i++)
             {
                 if (string.IsNullOrWhiteSpace(data[i])) continue;
-                dgData.Add(ConvertStringToProduct(data[i]));
-                original.Add(ConvertStringToProduct(data[i]));
+                dgData.Add(DataHandler.ConvertStringToProduct<Sensor>(data[i]));
+                original.Add(DataHandler.ConvertStringToProduct<Sensor>(data[i]));
             }
         }
 
         private void init()
         {
-            logPath = $@"{Environment.CurrentDirectory}\log.csv";
-            backupPath = @$"{Environment.CurrentDirectory}\backupLog";
-
-            dgData = new ObservableCollection<Product>();
-            original = new ObservableCollection<Product>();
-
-            Directory.CreateDirectory(backupPath);
+            dgData = new ObservableCollection<Sensor>();
+            original = new ObservableCollection<Sensor>();
 
             MakeComboBox();
         }
 
         private void MakeComboBox()
         {
-            List<string> comboBoxItem = new List<string>();
-
-            var fieldInfos = typeof(SearchItems).GetFields();
-            foreach (var field in fieldInfos)
-            {
-                comboBoxItem.Add(field.Name);
-            }
-
-            searchItem = new ObservableCollection<string>(comboBoxItem);
+            searchItem = new ObservableCollection<string>(DataHandler.MakeComboBoxItemList<SearchItems>());
             selectedComboBox = "All";
         }
 
@@ -305,11 +292,11 @@ namespace InventoryManagement.ViewModel
                 return;
             }
 
-            var product = new Product(Name, SerialNum, Location, Maker, EquipName, EquipID, ReceivingDay, Description);
+            var product = new Sensor(Name, SerialNum, Location, Maker, EquipName, EquipID, ReceivingDay, Description);
 
             foreach (var item in original)
             {
-                if (CheckEqual(item, product))
+                if (DataHandler.CheckEqual(item, product))
                 {
                     MessageBox.Show("중복되는 물품이 있으니 다른 값으로 변경해주세요");
                     return;
@@ -322,17 +309,14 @@ namespace InventoryManagement.ViewModel
 
         private void Save()
         {
-            DataHandler.WriteCsv(logPath, original);
-
-            var k = @$"{backupPath}\{DateTime.Now.ToString("yyyy-MM-dd")}_log.csv";
-            DataHandler.WriteCsv(k, original);
+            Log.WriteLog(nameof(Sensor), original);
 
             MessageBox.Show("Saved");
         }
 
         private void Delete()
         {
-            if (CheckNull(selectedDgData))
+            if (DataHandler.CheckNull(selectedDgData))
             {
                 MessageBox.Show("지울 파일을 선택해주세요");
                 return;
@@ -341,33 +325,31 @@ namespace InventoryManagement.ViewModel
             if (MessageBox.Show("정말 삭제하시겠습니까?", "정말로 삭제요?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 dgData.Remove(selectedDgData);
-                original.Remove(selectedDgData);
-                selectedDgData = new Product();
+                for (int i = 0; i < original.Count; i++)
+                {
+                    if (DataHandler.CheckEqual(original[i], selectedDgData))
+                    {
+                        original.RemoveAt(i);
+                    }
+                }
+                selectedDgData = new Sensor();
             }
         }
 
         private void Export()
         {
-            if (MessageBox.Show("저장해야 반영되니, 저장을 안하셨으면 저장 먼저 해주시기 바랍니다.\n 저장하셨습니까?", "정말요?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                SaveFileDialog sfd = new SaveFileDialog();
-                sfd.Filter = "Csv file (*.csv)|*.csv";
-                if (sfd.ShowDialog() == true)
-                {
-                    DataHandler.WriteCsv(sfd.FileName, original);
-                }
-            }
+            DataHandler.ExportFile(original);
         }
 
         private void Search()
         {
             if (string.IsNullOrWhiteSpace(searchData))
             {
-                dgData = new ObservableCollection<Product>(original);
+                dgData = new ObservableCollection<Sensor>(original);
                 return;
             }
 
-            ObservableCollection<Product> ov = new ObservableCollection<Product>();
+            ObservableCollection<Sensor> ov = new ObservableCollection<Sensor>();
 
             for (int i = 0; i < original.Count; i++)
             {
@@ -411,7 +393,7 @@ namespace InventoryManagement.ViewModel
                 }
             }
 
-            dgData = new ObservableCollection<Product>(ov);
+            dgData = new ObservableCollection<Sensor>(ov);
         }
 
         private void Refresh()
@@ -419,47 +401,9 @@ namespace InventoryManagement.ViewModel
             BindingDataGrid();
         }
 
-        private Product ConvertStringToProduct(string str)
+        private void History()
         {
-            Product product = new Product();
-            var s = str.Split(',');
-            int idx = 0;
 
-            var propertyInfos = typeof(Product).GetProperties();
-            foreach (var property in propertyInfos)
-            {
-                property.SetValue(product, s[idx++]);
-            }
-
-            return product;
-        }
-
-        private bool CheckEqual(Product p1, Product p2)
-        {
-            var propertyInfos = typeof(Product).GetProperties();
-
-            foreach (var property in propertyInfos)
-            {
-                var a = property.GetValue(p1, null) == null ? "" : property.GetValue(p1, null).ToString();
-                var b = property.GetValue(p1, null) == null ? "" : property.GetValue(p2, null).ToString();
-                if (a != b) return false;
-
-            }
-            return true;
-        }
-
-        private bool CheckNull(Product product)
-        {
-            if (product == null) return true;
-
-            var propertyInfos = typeof(Product).GetProperties();
-
-            foreach (var property in propertyInfos)
-            {
-                if (property.GetValue(product, null) != null) return false;
-            }
-
-            return true;
         }
     }
 }

@@ -26,9 +26,10 @@
             <TabItem>
                 <TabItem.Header>
                     <StackPanel>
-                        <TextBlock Text="Pickup" FontSize="20" FontWeight="Bold" Foreground="#FF002EFF"/>
+                        <TextBlock Text="Fiber" FontSize="20" FontWeight="Bold" Foreground="#FF002EFF"/>
                     </StackPanel>
                 </TabItem.Header>
+                <view:ManageFiber/>
             </TabItem>
         </TabControl>
     </Grid>

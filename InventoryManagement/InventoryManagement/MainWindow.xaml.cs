@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using InventoryManagement.Data;
+using System.Windows;
 
 namespace InventoryManagement
 {
@@ -7,6 +8,13 @@ namespace InventoryManagement
         public MainWindow()
         {
             InitializeComponent();
+
+            init();
+        }
+
+        private void init()
+        {
+            Log.MakeBackupLogDir();
         }
     }
 }
