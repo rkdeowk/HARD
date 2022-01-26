@@ -1,12 +1,13 @@
-﻿<UserControl x:Class="InventoryManagement.View.ManageFiber"
+﻿<UserControl x:Class="InventoryManagement.View.ManageSWVersion"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InventoryManagement.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="*"/>
@@ -31,26 +32,17 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Label Margin="2" Grid.Row="0" Content="CIS Code"/>
-                <Label Margin="2" Grid.Row="1" Content="Type"/>
-                <Label Margin="2" Grid.Row="2" Content="Input Spec."/>
-                <Label Margin="2" Grid.Row="3" Content="Output Spec."/>
-                <Label Margin="2" Grid.Row="4" Content="Length"/>
-                <Label Margin="2" Grid.Row="5" Content="Quantity"/>
-                <Label Margin="2" Grid.Row="6" Content="Description&#10;(use dot.)"/>
+                <Label Margin="2" Grid.Row="0" Content="Date"/>
+                <Label Margin="2" Grid.Row="1" Content="Software"/>
+                <Label Margin="2" Grid.Row="2" Content="Version"/>
+                <Label Margin="2" Grid.Row="3" Content="Description&#10;(use dot.)"/>
 
-                <TextBox Margin="2" Grid.Row="0" Grid.Column="1" Text="{Binding CISCode}"/>
-                <TextBox Margin="2" Grid.Row="1" Grid.Column="1" Text="{Binding Type}"/>
-                <TextBox Margin="2" Grid.Row="2" Grid.Column="1" Text="{Binding InputSpec}"/>
-                <TextBox Margin="2" Grid.Row="3" Grid.Column="1" Text="{Binding OutputSpec}"/>
-                <TextBox Margin="2" Grid.Row="4" Grid.Column="1" Text="{Binding Length}"/>
-                <TextBox Margin="2" Grid.Row="5" Grid.Column="1" Text="{Binding Quantity}"/>
-                <TextBox Margin="2" Grid.Row="6" Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap"/>
+                <DatePicker Margin="2" Grid.Row="0" Grid.Column="1" SelectedDate="{Binding Date}" Focusable="False"/>
+                <TextBox Margin="2" Grid.Row="1" Grid.Column="1" Text="{Binding Software}"/>
+                <TextBox Margin="2" Grid.Row="2" Grid.Column="1" Text="{Binding Version}"/>
+                <TextBox Margin="2" Grid.Row="3" Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap"/>
 
             </Grid>
 
@@ -110,12 +102,9 @@
                   IsReadOnly="True">
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="CIS Code" Binding="{Binding CISCode}"/>
-                    <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
-                    <DataGridTextColumn Header="Input Spec." Binding="{Binding InputSpec}"/>
-                    <DataGridTextColumn Header="Output Spec." Binding="{Binding OutputSpec}"/>
-                    <DataGridTextColumn Header="Length" Binding="{Binding Length}"/>
-                    <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}"/>
+                    <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
+                    <DataGridTextColumn Header="Software" Binding="{Binding Software}"/>
+                    <DataGridTextColumn Header="Version" Binding="{Binding Version}"/>
                     <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
                 </DataGrid.Columns>
 

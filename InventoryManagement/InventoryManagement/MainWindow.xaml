@@ -31,6 +31,14 @@
                 </TabItem.Header>
                 <view:ManageFiber/>
             </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel>
+                        <TextBlock Text="SW Ver." FontSize="20" FontWeight="Bold" Foreground="#FF002EFF"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <view:ManageSWVersion/>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

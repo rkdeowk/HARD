@@ -1,12 +1,13 @@
 ﻿using InventoryManagement.Core;
 using InventoryManagement.Data;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 
 namespace InventoryManagement.ViewModel
 {
-    public class ManageFiberViewModel : ObservableObject
+    public class ManageSWVersionViewModel : ObservableObject
     {
         #region [ Command ]
 
@@ -50,8 +51,8 @@ namespace InventoryManagement.ViewModel
 
         #region [ Binding ]
 
-        private ObservableCollection<Fiber> _dgData;
-        public ObservableCollection<Fiber> dgData
+        private ObservableCollection<SWVersion> _dgData;
+        public ObservableCollection<SWVersion> dgData
         {
             get { return _dgData; }
             set
@@ -61,19 +62,17 @@ namespace InventoryManagement.ViewModel
             }
         }
 
-        private Fiber _selectedDgData;
-        public Fiber selectedDgData
+        private SWVersion _selectedDgData;
+        public SWVersion selectedDgData
         {
             get { return _selectedDgData; }
             set
             {
                 if (value is null) return;
 
-                CISCode = value.CISCode;
-                InputSpec = value.InputSpec;
-                OutputSpec = value.OutputSpec;
-                Length = value.Length;
-                Quantity = value.Quantity;
+                Date = value.Date;
+                Software = value.Software;
+                Version = value.Version;
                 Description = value.Description;
 
                 _selectedDgData = value;
@@ -81,68 +80,42 @@ namespace InventoryManagement.ViewModel
             }
         }
 
-        private string _CISCode;
-        public string CISCode
+        private string _Date;
+        public string Date
         {
-            get { return _CISCode; }
+            get { return _Date; }
             set
             {
-                _CISCode = value;
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    _Date = string.Empty;
+                }
+                else
+                {
+                    _Date = DateTime.Parse(value).ToString("yyyy-MM/dd");
+                }
                 OnPropertyChanged();
             }
         }
 
-        private string _Type;
-        public string Type
+        private string _Software;
+        public string Software
         {
-            get { return _Type; }
+            get { return _Software; }
             set
             {
-                _Type = value;
+                _Software = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _InputSpec;
-        public string InputSpec
+        private string _Version;
+        public string Version
         {
-            get { return _InputSpec; }
+            get { return _Version; }
             set
             {
-                _InputSpec = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _OutputSpec;
-        public string OutputSpec
-        {
-            get { return _OutputSpec; }
-            set
-            {
-                _OutputSpec = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _Length;
-        public string Length
-        {
-            get { return _Length; }
-            set
-            {
-                _Length = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _Quantity;
-        public string Quantity
-        {
-            get { return _Quantity; }
-            set
-            {
-                _Quantity = value;
+                _Version = value;
                 OnPropertyChanged();
             }
         }
@@ -193,38 +166,32 @@ namespace InventoryManagement.ViewModel
 
         #endregion
 
-        public class Fiber
+        public class SWVersion
         {
-            public string CISCode { get; set; }
-            public string Type { get; set; }
-            public string InputSpec { get; set; }
-            public string OutputSpec { get; set; }
-            public string Length { get; set; }
-            public string Quantity { get; set; }
+            public string Date { get; set; }
+            public string Software { get; set; }
+            public string Version { get; set; }
             public string Description { get; set; }
 
-            public Fiber(string CISCode, string Type, string InputSpec, string OutputSpec, string Length, string Quantity, string Description)
+            public SWVersion(string Date, string Software, string Version, string Description)
             {
-                this.CISCode = CISCode != null ? CISCode : "";
-                this.Type = Type != null ? Type : "";
-                this.InputSpec = InputSpec != null ? InputSpec : "";
-                this.OutputSpec = OutputSpec != null ? OutputSpec : "";
-                this.Length = Length != null ? Length : "";
-                this.Quantity = Quantity != null ? Quantity : "";
+                this.Date = Date != null ? Date : "";
+                this.Software = Software != null ? Software : "";
+                this.Version = Version != null ? Version : "";
                 this.Description = Description != null ? Description : "";
             }
 
-            public Fiber() { }
+            public SWVersion() { }
         }
 
         public class SearchItems
         {
-            public string All, CISCode;
+            public string All, Software;
         }
 
-        ObservableCollection<Fiber> original;
+        ObservableCollection<SWVersion> original;
 
-        public ManageFiberViewModel()
+        public ManageSWVersionViewModel()
         {
             init();
 
@@ -233,24 +200,24 @@ namespace InventoryManagement.ViewModel
 
         private void BindingDataGrid()
         {
-            dgData = new ObservableCollection<Fiber>();
-            original = new ObservableCollection<Fiber>();
+            dgData = new ObservableCollection<SWVersion>();
+            original = new ObservableCollection<SWVersion>();
 
-            var data = Log.ReadCsv(nameof(Fiber));
+            var data = Log.ReadCsv(nameof(SWVersion));
             if (data.Count > 0) data.RemoveAt(0);
 
             for (int i = 0; i < data.Count; i++)
             {
                 if (string.IsNullOrWhiteSpace(data[i])) continue;
-                dgData.Add(DataHandler.ConvertStringToProduct<Fiber>(data[i]));
-                original.Add(DataHandler.ConvertStringToProduct<Fiber>(data[i]));
+                dgData.Add(DataHandler.ConvertStringToProduct<SWVersion>(data[i]));
+                original.Add(DataHandler.ConvertStringToProduct<SWVersion>(data[i]));
             }
         }
 
         private void init()
         {
-            dgData = new ObservableCollection<Fiber>();
-            original = new ObservableCollection<Fiber>();
+            dgData = new ObservableCollection<SWVersion>();
+            original = new ObservableCollection<SWVersion>();
 
             MakeComboBox();
         }
@@ -263,13 +230,13 @@ namespace InventoryManagement.ViewModel
 
         private void Add()
         {
-            if (string.IsNullOrWhiteSpace(CISCode))
+            if (string.IsNullOrWhiteSpace(Software))
             {
-                MessageBox.Show($"CIS Code을 입력해주세요");
+                MessageBox.Show($"Software를 입력해주세요");
                 return;
             }
 
-            var product = new Fiber(CISCode, Type, InputSpec, OutputSpec, Length, Quantity, Description);
+            var product = new SWVersion(Date, Software, Version, Description);
 
             foreach (var item in original)
             {
@@ -286,7 +253,7 @@ namespace InventoryManagement.ViewModel
 
         private void Save()
         {
-            Log.WriteLog(nameof(Fiber), original);
+            Log.WriteLog(nameof(SWVersion), original);
 
             MessageBox.Show("Saved");
         }
@@ -309,7 +276,7 @@ namespace InventoryManagement.ViewModel
                         original.RemoveAt(i);
                     }
                 }
-                selectedDgData = new Fiber();
+                selectedDgData = new SWVersion();
             }
         }
 
@@ -322,18 +289,18 @@ namespace InventoryManagement.ViewModel
         {
             if (string.IsNullOrWhiteSpace(searchData))
             {
-                dgData = new ObservableCollection<Fiber>(original);
+                dgData = new ObservableCollection<SWVersion>(original);
                 return;
             }
 
-            ObservableCollection<Fiber> ov = new ObservableCollection<Fiber>();
+            ObservableCollection<SWVersion> ov = new ObservableCollection<SWVersion>();
 
             for (int i = 0; i < original.Count; i++)
             {
-                if (original[i].CISCode.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
+                if (original[i].Software.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
             }
 
-            dgData = new ObservableCollection<Fiber>(ov);
+            dgData = new ObservableCollection<SWVersion>(ov);
         }
 
         private void Refresh()

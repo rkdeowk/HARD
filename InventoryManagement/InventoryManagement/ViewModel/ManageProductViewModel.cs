@@ -1,8 +1,15 @@
 ﻿using InventoryManagement.Core;
 using InventoryManagement.Data;
+using InventoryManagement.View;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Reflection;
+using System.Text;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
 namespace InventoryManagement.ViewModel
@@ -47,10 +54,10 @@ namespace InventoryManagement.ViewModel
             get { return (_refreshCommand) ?? (_refreshCommand = new RelayCommand(Refresh)); }
         }
 
-        private ICommand _historyCommand;
-        public ICommand HistoryCommand
+        private ICommand _doubleClickCommand;
+        public ICommand DoubleClickCommand
         {
-            get { return (_historyCommand) ?? (_historyCommand = new RelayCommand(History)); }
+            get { return (_doubleClickCommand) ?? (_doubleClickCommand = new RelayCommand(DoubleClick)); }
         }
 
         #endregion
@@ -162,8 +169,14 @@ namespace InventoryManagement.ViewModel
             get { return _ReceivingDay; }
             set
             {
-                if (string.IsNullOrWhiteSpace(value)) return;
-                _ReceivingDay = DateTime.Parse(value).ToString("yyyy-MM/dd");
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    _ReceivingDay = string.Empty;
+                }
+                else
+                {
+                    _ReceivingDay = DateTime.Parse(value).ToString("yyyy-MM/dd");
+                }
                 OnPropertyChanged();
             }
         }
@@ -175,6 +188,61 @@ namespace InventoryManagement.ViewModel
             set
             {
                 _Description = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _MacAddress;
+        public string MacAddress
+        {
+            get { return _MacAddress; }
+            set
+            {
+                _MacAddress = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _ViewerVersion;
+        public string ViewerVersion
+        {
+            get { return _ViewerVersion; }
+            set
+            {
+                _ViewerVersion = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _AppVersion;
+        public string AppVersion
+        {
+            get { return _AppVersion; }
+            set
+            {
+                _AppVersion = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _SOMVersion;
+        public string SOMVersion
+        {
+            get { return _SOMVersion; }
+            set
+            {
+                _SOMVersion = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _Date;
+        public string Date
+        {
+            get { return _Date; }
+            set
+            {
+                _Date = value;
                 OnPropertyChanged();
             }
         }
@@ -224,8 +292,13 @@ namespace InventoryManagement.ViewModel
             public string EquipID { get; set; }
             public string ReceivingDay { get; set; }
             public string Description { get; set; }
+            public string MacAddress { get; set; }
+            public string ViewerVersion { get; set; }
+            public string AppVersion { get; set; }
+            public string SOMVersion { get; set; }
+            public string Date { get; set; }
 
-            public Sensor(string Name, string SerialNum, string Location, string Maker, string EquipName, string EquipID, string ReceivingDay, string Description)
+            public Sensor(string Name, string SerialNum, string Location, string Maker, string EquipName, string EquipID, string ReceivingDay, string Description, string MacAddress, string ViewerVersion, string AppVersion, string SOMVersion, string Date)
             {
                 this.Name = Name != null ? Name : "";
                 this.SerialNum = SerialNum != null ? SerialNum : "";
@@ -235,6 +308,11 @@ namespace InventoryManagement.ViewModel
                 this.EquipID = EquipID != null ? EquipID : "";
                 this.ReceivingDay = ReceivingDay != null ? ReceivingDay : "";
                 this.Description = Description != null ? Description : "";
+                this.MacAddress = MacAddress != null ? MacAddress : "";
+                this.ViewerVersion = ViewerVersion != null ? ViewerVersion : "";
+                this.AppVersion = AppVersion != null ? AppVersion : "";
+                this.SOMVersion = SOMVersion != null ? SOMVersion : "";
+                this.Date = Date != null ? Date : "";
             }
 
             public Sensor() { }
@@ -246,12 +324,22 @@ namespace InventoryManagement.ViewModel
         }
 
         ObservableCollection<Sensor> original;
+        List<string> history;
 
         public ManageProductViewModel()
         {
             init();
 
             BindingDataGrid();
+
+            if (!File.Exists(Log.GetHistoryLogPath(nameof(Sensor))))
+            {
+                history = Log.ReadCsv(nameof(Sensor));
+            }
+            else
+            {
+                history = Log.ReadCsvHistory(nameof(Sensor));
+            }
         }
 
         private void BindingDataGrid()
@@ -291,8 +379,13 @@ namespace InventoryManagement.ViewModel
                 MessageBox.Show($"Name을 입력해주세요");
                 return;
             }
+            else if (string.IsNullOrWhiteSpace(SerialNum))
+            {
+                MessageBox.Show($"SerialNum을 입력해주세요");
+                return;
+            }
 
-            var product = new Sensor(Name, SerialNum, Location, Maker, EquipName, EquipID, ReceivingDay, Description);
+            var product = new Sensor(Name, SerialNum, Location, Maker, EquipName, EquipID, ReceivingDay, Description, MacAddress, ViewerVersion, AppVersion, SOMVersion, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
 
             foreach (var item in original)
             {
@@ -305,11 +398,15 @@ namespace InventoryManagement.ViewModel
 
             dgData.Add(product);
             original.Add(product);
+
+            PropertyInfo[] fields = typeof(Sensor).GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            history.Add(DataHandler.ToCsvProperty(",", fields, product));
         }
 
         private void Save()
         {
             Log.WriteLog(nameof(Sensor), original);
+            Log.WriteLog(nameof(Sensor), history);
 
             MessageBox.Show("Saved");
         }
@@ -401,9 +498,21 @@ namespace InventoryManagement.ViewModel
             BindingDataGrid();
         }
 
-        private void History()
+        private void DoubleClick()
         {
+            if (selectedDgData is null || string.IsNullOrWhiteSpace(selectedDgData.SerialNum)) return;
 
+            ManageProductHistory container = new ManageProductHistory()
+            {
+                Title = $"{nameof(Sensor)} History",
+                Height = 1200,
+                Width = 1400,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen,
+            };
+
+            container.GetHistory(selectedDgData.SerialNum);
+
+            container.Show();
         }
     }
 }

@@ -34,7 +34,11 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <Label Margin="2" Grid.Row="0" Content="Name"/>
@@ -45,6 +49,10 @@
                 <Label Margin="2" Grid.Row="5" Content="EquipID"/>
                 <Label Margin="2" Grid.Row="6" Content="ReceivingDay"/>
                 <Label Margin="2" Grid.Row="7" Content="Description&#10;(use dot.)"/>
+                <Label Margin="2" Grid.Row="8" Content="Mac Address"/>
+                <Label Margin="2" Grid.Row="9" Content="Viewer Ver."/>
+                <Label Margin="2" Grid.Row="10" Content="App Ver."/>
+                <Label Margin="2" Grid.Row="11" Content="SOM Ver."/>
 
                 <TextBox Margin="2" Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
                 <TextBox Margin="2" Grid.Row="1" Grid.Column="1" Text="{Binding SerialNum}"/>
@@ -53,7 +61,11 @@
                 <TextBox Margin="2" Grid.Row="4" Grid.Column="1" Text="{Binding EquipName}"/>
                 <TextBox Margin="2" Grid.Row="5" Grid.Column="1" Text="{Binding EquipID}"/>
                 <DatePicker Margin="2" Grid.Row="6" Grid.Column="1" SelectedDate="{Binding ReceivingDay}" Focusable="False"/>
-                <TextBox Margin="2" Grid.Row="7" Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" Cursor="IBeam"/>
+                <TextBox Margin="2" Grid.Row="7" Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap"/>
+                <TextBox Margin="2" Grid.Row="8" Grid.Column="1" Text="{Binding MacAddress}"/>
+                <TextBox Margin="2" Grid.Row="9" Grid.Column="1" Text="{Binding ViewerVersion}"/>
+                <TextBox Margin="2" Grid.Row="10" Grid.Column="1" Text="{Binding AppVersion}"/>
+                <TextBox Margin="2" Grid.Row="11" Grid.Column="1" Text="{Binding SOMVersion}"/>
 
             </Grid>
 
@@ -67,14 +79,12 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
                 <Button Margin="5" Grid.Row="0" Grid.Column="0" Content="Add" Command="{Binding AddCommand}"/>
                 <Button Margin="5" Grid.Row="0" Grid.Column="1" Content="Save" Command="{Binding SaveCommand}"/>
                 <Button Margin="5" Grid.Row="1" Grid.Column="0" Content="Delete" Command="{Binding DeleteCommand}"/>
                 <Button Margin="5" Grid.Row="1" Grid.Column="1" Content="Export" Command="{Binding ExportCommand}"/>
-                <Button Margin="5" Grid.Row="2" Grid.Column="0" Content="History" Command="{Binding HistoryCommand}"/>
             </Grid>
 
         </Grid>
@@ -114,6 +124,10 @@
                   SelectionMode="Single"
                   IsReadOnly="True">
 
+                <DataGrid.InputBindings>
+                    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding DoubleClickCommand}"/>
+                </DataGrid.InputBindings>
+
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                     <DataGridTextColumn Header="SerialNum" Binding="{Binding SerialNum}"/>
@@ -123,6 +137,10 @@
                     <DataGridTextColumn Header="EquipID" Binding="{Binding EquipID}"/>
                     <DataGridTextColumn Header="ReceivingDay" Binding="{Binding ReceivingDay}"/>
                     <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
+                    <DataGridTextColumn Header="Mac Address" Binding="{Binding MacAddress}"/>
+                    <DataGridTextColumn Header="Viewer Ver." Binding="{Binding ViewerVersion}"/>
+                    <DataGridTextColumn Header="App Ver." Binding="{Binding AppVersion}"/>
+                    <DataGridTextColumn Header="SOM Ver." Binding="{Binding SOMVersion}"/>
                 </DataGrid.Columns>
 
             </DataGrid>

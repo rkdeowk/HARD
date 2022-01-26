@@ -16,14 +16,16 @@ namespace InventoryManagement.Data
         {
             return $@"{Environment.CurrentDirectory}\log_{item}.csv";
         }
-        public static string GetBackupLogPath(string item)
+
+        public static string GetHistoryLogPath(string item)
         {
-            return $@"{Environment.CurrentDirectory}\backupLog\{DateTime.Now:yyyy-MM-dd}_log_{item}.csv";
+            return $@"{Environment.CurrentDirectory}\historyLog\log_{item}.csv";
         }
 
-        public static void MakeBackupLogDir()
+        public static void MakeLogDir()
         {
             Directory.CreateDirectory($@"{Environment.CurrentDirectory}\backupLog");
+            Directory.CreateDirectory($@"{Environment.CurrentDirectory}\historyLog");
         }
 
         public static List<string> ReadCsv(string item)
@@ -31,10 +33,19 @@ namespace InventoryManagement.Data
             return DataHandler.ReadCsv(GetLogPath(item));
         }
 
+        public static List<string> ReadCsvHistory(string item)
+        {
+            return DataHandler.ReadCsv(GetHistoryLogPath(item));
+        }
+
         public static void WriteLog<T>(string item, IEnumerable<T> data)
         {
             DataHandler.WriteCsv(GetLogPath(item), data);
-            DataHandler.WriteCsv(GetBackupLogPath(item), data);
+        }
+
+        public static void WriteLog(string item, List<string> data)
+        {
+            DataHandler.WriteCsv(GetHistoryLogPath(item), data);
         }
     }
 
@@ -42,12 +53,21 @@ namespace InventoryManagement.Data
     {
         #region [ Read and Write ]
 
-        public static List<string> ReadCsv(string path)
+        public static bool ExistFile(string path)
         {
             if (!File.Exists(path))
             {
-                File.Create(path);
+                var file = File.Create(path);
+                file.Close();
+                return false;
+            }
+            return true;
+        }
 
+        public static List<string> ReadCsv(string path)
+        {
+            if (!ExistFile(path))
+            {
                 return new List<string>();
             }
 
@@ -61,6 +81,11 @@ namespace InventoryManagement.Data
                     {
                         data.Add(sr.ReadLine());
                     }
+
+                    if (data.Count > 0 && string.IsNullOrWhiteSpace(data[data.Count - 1]))
+                    {
+                        data.RemoveAt(data.Count - 1);
+                    }
                 }
             }
             catch (Exception)
@@ -72,6 +97,11 @@ namespace InventoryManagement.Data
                     while (!sr.EndOfStream)
                     {
                         data.Add(sr.ReadLine());
+                    }
+
+                    if (data.Count > 0 && string.IsNullOrWhiteSpace(data[data.Count - 1]))
+                    {
+                        data.RemoveAt(data.Count - 1);
                     }
                 }
             }
@@ -118,6 +148,8 @@ namespace InventoryManagement.Data
         {
             try
             {
+                ExistFile(path);
+
                 using (var sw = new StreamWriter(path, false, Encoding.UTF8))
                 {
                     sw.WriteLine(data);
@@ -138,6 +170,8 @@ namespace InventoryManagement.Data
         {
             try
             {
+                ExistFile(path);
+
                 using (var sw = new StreamWriter(path, false, Encoding.UTF8))
                 {
                     sw.WriteLine(ToCsv(objectlist));
@@ -150,6 +184,34 @@ namespace InventoryManagement.Data
                 using (var sw = new StreamWriter(path, false, Encoding.UTF8))
                 {
                     sw.WriteLine(ToCsv(objectlist));
+                }
+            }
+        }
+
+        public static void WriteCsv(string path, List<string> data)
+        {
+            try
+            {
+                ExistFile(path);
+
+                using (var sw = new StreamWriter(path, false, Encoding.UTF8))
+                {
+                    for (int i = 0; i < data.Count; i++)
+                    {
+                        sw.WriteLine(data[i]);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                Thread.Sleep(timeout);
+
+                using (var sw = new StreamWriter(path, false, Encoding.UTF8))
+                {
+                    for (int i = 0; i < data.Count; i++)
+                    {
+                        sw.WriteLine(data[i]);
+                    }
                 }
             }
         }
@@ -224,6 +286,11 @@ namespace InventoryManagement.Data
             }
 
             return true;
+        }
+
+        public static string GetHeaderFromCSV<T>()
+        {
+            return string.Join(",", typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public).Select(x => x.Name).ToArray());
         }
     }
 }

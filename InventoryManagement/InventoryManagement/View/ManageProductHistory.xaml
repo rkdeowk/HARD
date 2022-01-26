@@ -1,0 +1,35 @@
+﻿<Window x:Class="InventoryManagement.View.ManageProductHistory"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="ManageProductHistory" Height="450" Width="800">
+    <Grid>
+        
+        <DataGrid Margin="5" x:Name="dataGrid"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding dgData}"
+                  SelectionMode="Single"
+                  IsReadOnly="True">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="SerialNum" Binding="{Binding SerialNum}"/>
+                <DataGridTextColumn Header="Location" Binding="{Binding Location}"/>
+                <DataGridTextColumn Header="Maker" Binding="{Binding Maker}"/>
+                <DataGridTextColumn Header="EquipName" Binding="{Binding EquipName}"/>
+                <DataGridTextColumn Header="EquipID" Binding="{Binding EquipID}"/>
+                <DataGridTextColumn Header="ReceivingDay" Binding="{Binding ReceivingDay}"/>
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
+                <DataGridTextColumn Header="Mac Address" Binding="{Binding MacAddress}"/>
+                <DataGridTextColumn Header="Viewer Ver." Binding="{Binding ViewerVersion}"/>
+                <DataGridTextColumn Header="App Ver." Binding="{Binding AppVersion}"/>
+                <DataGridTextColumn Header="SOM Ver." Binding="{Binding SOMVersion}"/>
+                <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
+            </DataGrid.Columns>
+
+        </DataGrid>
+        
+    </Grid>
+</Window>
