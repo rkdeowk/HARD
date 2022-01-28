@@ -91,6 +91,10 @@ namespace InventoryManagement.ViewModel
                 EquipID = value.EquipID;
                 ReceivingDay = value.ReceivingDay;
                 Description = value.Description;
+                MacAddress = value.MacAddress;
+                ViewerVersion = value.ViewerVersion;
+                AppVersion = value.AppVersion;
+                SOMVersion = value.AppVersion;
 
                 _selectedDgData = value;
                 OnPropertyChanged();
@@ -505,8 +509,8 @@ namespace InventoryManagement.ViewModel
             ManageProductHistory container = new ManageProductHistory()
             {
                 Title = $"{nameof(Sensor)} History",
-                Height = 1200,
-                Width = 1400,
+                Height = 500,
+                Width = 1300,
                 WindowStartupLocation = WindowStartupLocation.CenterScreen,
             };
 

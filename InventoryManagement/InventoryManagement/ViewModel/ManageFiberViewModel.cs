@@ -70,6 +70,7 @@ namespace InventoryManagement.ViewModel
                 if (value is null) return;
 
                 CISCode = value.CISCode;
+                Type = value.Type;
                 InputSpec = value.InputSpec;
                 OutputSpec = value.OutputSpec;
                 Length = value.Length;

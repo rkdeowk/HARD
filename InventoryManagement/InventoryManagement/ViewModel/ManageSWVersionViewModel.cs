@@ -70,9 +70,10 @@ namespace InventoryManagement.ViewModel
             {
                 if (value is null) return;
 
-                Date = value.Date;
+                Status = value.Status;
                 Software = value.Software;
                 Version = value.Version;
+                Date = value.Date;
                 Description = value.Description;
 
                 _selectedDgData = value;
@@ -80,20 +81,13 @@ namespace InventoryManagement.ViewModel
             }
         }
 
-        private string _Date;
-        public string Date
+        private string _Status;
+        public string Status
         {
-            get { return _Date; }
+            get { return _Status; }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    _Date = string.Empty;
-                }
-                else
-                {
-                    _Date = DateTime.Parse(value).ToString("yyyy-MM/dd");
-                }
+                _Status = value;
                 OnPropertyChanged();
             }
         }
@@ -116,6 +110,24 @@ namespace InventoryManagement.ViewModel
             set
             {
                 _Version = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _Date;
+        public string Date
+        {
+            get { return _Date; }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    _Date = string.Empty;
+                }
+                else
+                {
+                    _Date = DateTime.Parse(value).ToString("yyyy-MM/dd");
+                }
                 OnPropertyChanged();
             }
         }
@@ -168,16 +180,18 @@ namespace InventoryManagement.ViewModel
 
         public class SWVersion
         {
-            public string Date { get; set; }
+            public string Status { get; set; }
             public string Software { get; set; }
             public string Version { get; set; }
+            public string Date { get; set; }
             public string Description { get; set; }
 
-            public SWVersion(string Date, string Software, string Version, string Description)
+            public SWVersion(string Status, string Software, string Version, string Date, string Description)
             {
-                this.Date = Date != null ? Date : "";
+                this.Status = Status != null ? Status : "";
                 this.Software = Software != null ? Software : "";
                 this.Version = Version != null ? Version : "";
+                this.Date = Date != null ? Date : "";
                 this.Description = Description != null ? Description : "";
             }
 
@@ -186,7 +200,7 @@ namespace InventoryManagement.ViewModel
 
         public class SearchItems
         {
-            public string All, Software;
+            public string All, Status, Software;
         }
 
         ObservableCollection<SWVersion> original;
@@ -236,7 +250,7 @@ namespace InventoryManagement.ViewModel
                 return;
             }
 
-            var product = new SWVersion(Date, Software, Version, Description);
+            var product = new SWVersion(Status, Software, Version, Date, Description);
 
             foreach (var item in original)
             {
@@ -298,6 +312,7 @@ namespace InventoryManagement.ViewModel
             for (int i = 0; i < original.Count; i++)
             {
                 if (original[i].Software.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
+                else if (original[i].Status.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
             }
 
             dgData = new ObservableCollection<SWVersion>(ov);
