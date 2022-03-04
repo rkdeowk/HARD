@@ -311,8 +311,8 @@ namespace InventoryManagement.ViewModel
 
             for (int i = 0; i < original.Count; i++)
             {
-                if (original[i].Software.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
-                else if (original[i].Status.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
+                if (original[i].Software.ToUpper().Contains(searchData.ToUpper())) ov.Add(original[i]);
+                else if (original[i].Status.ToUpper().Contains(searchData.ToUpper())) ov.Add(original[i]);
             }
 
             dgData = new ObservableCollection<SWVersion>(ov);

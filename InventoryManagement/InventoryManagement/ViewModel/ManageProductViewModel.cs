@@ -430,6 +430,7 @@ namespace InventoryManagement.ViewModel
                 {
                     if (DataHandler.CheckEqual(original[i], selectedDgData))
                     {
+                        history.RemoveAt(i + 1);
                         original.RemoveAt(i);
                     }
                 }
@@ -457,36 +458,36 @@ namespace InventoryManagement.ViewModel
                 switch (selectedComboBox)
                 {
                     case nameof(SearchItems.All):
-                        if (original[i].Name.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
-                        else if (original[i].SerialNum.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
-                        else if (original[i].Location.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
-                        else if (original[i].Maker.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
-                        else if (original[i].EquipName.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
-                        else if (original[i].EquipID.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
+                        if (original[i].Name.ToUpper().Contains(searchData.ToUpper())) ov.Add(original[i]);
+                        else if (original[i].SerialNum.ToUpper().Contains(searchData.ToUpper())) ov.Add(original[i]);
+                        else if (original[i].Location.ToUpper().Contains(searchData.ToUpper())) ov.Add(original[i]);
+                        else if (original[i].Maker.ToUpper().Contains(searchData.ToUpper())) ov.Add(original[i]);
+                        else if (original[i].EquipName.ToUpper().Contains(searchData.ToUpper())) ov.Add(original[i]);
+                        else if (original[i].EquipID.ToUpper().Contains(searchData.ToUpper())) ov.Add(original[i]);
                         break;
 
                     case nameof(SearchItems.Name):
-                        if (original[i].Name.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
+                        if (original[i].Name.ToUpper().Contains(searchData.ToUpper())) ov.Add(original[i]);
                         break;
 
                     case nameof(SearchItems.SerialNum):
-                        if (original[i].SerialNum.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
+                        if (original[i].SerialNum.ToUpper().Contains(searchData.ToUpper())) ov.Add(original[i]);
                         break;
 
                     case nameof(SearchItems.Location):
-                        if (original[i].Location.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
+                        if (original[i].Location.ToUpper().Contains(searchData.ToUpper())) ov.Add(original[i]);
                         break;
 
                     case nameof(SearchItems.Maker):
-                        if (original[i].Maker.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
+                        if (original[i].Maker.ToUpper().Contains(searchData.ToUpper())) ov.Add(original[i]);
                         break;
 
                     case nameof(SearchItems.EquipName):
-                        if (original[i].EquipName.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
+                        if (original[i].EquipName.ToUpper().Contains(searchData.ToUpper())) ov.Add(original[i]);
                         break;
 
                     case nameof(SearchItems.EquipID):
-                        if (original[i].EquipID.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
+                        if (original[i].EquipID.ToUpper().Contains(searchData.ToUpper())) ov.Add(original[i]);
                         break;
 
                     default:

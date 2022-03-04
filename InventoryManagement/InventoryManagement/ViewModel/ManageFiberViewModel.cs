@@ -331,7 +331,7 @@ namespace InventoryManagement.ViewModel
 
             for (int i = 0; i < original.Count; i++)
             {
-                if (original[i].CISCode.ToUpper() == searchData.ToUpper()) ov.Add(original[i]);
+                if (original[i].CISCode.ToUpper().Contains(searchData.ToUpper())) ov.Add(original[i]);
             }
 
             dgData = new ObservableCollection<Fiber>(ov);
