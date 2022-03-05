@@ -430,7 +430,7 @@ namespace InventoryManagement.ViewModel
                 {
                     if (DataHandler.CheckEqual(original[i], selectedDgData))
                     {
-                        history.RemoveAt(i + 1);
+                        history.RemoveAt(i);
                         original.RemoveAt(i);
                     }
                 }
