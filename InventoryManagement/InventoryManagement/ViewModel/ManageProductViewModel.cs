@@ -6,10 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Reflection;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
 namespace InventoryManagement.ViewModel
@@ -336,11 +333,7 @@ namespace InventoryManagement.ViewModel
 
             BindingDataGrid();
 
-            if (!File.Exists(Log.GetHistoryLogPath(nameof(Sensor))))
-            {
-                history = Log.ReadCsv(nameof(Sensor));
-            }
-            else
+            if (File.Exists(Log.GetHistoryLogPath(nameof(Sensor))))
             {
                 history = Log.ReadCsvHistory(nameof(Sensor));
             }
@@ -366,6 +359,7 @@ namespace InventoryManagement.ViewModel
         {
             dgData = new ObservableCollection<Sensor>();
             original = new ObservableCollection<Sensor>();
+            history = new List<string>();
 
             MakeComboBox();
         }

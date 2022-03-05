@@ -269,7 +269,6 @@ namespace InventoryManagement.Data
                 var a = property.GetValue(t1, null) == null ? "" : property.GetValue(t1, null).ToString();
                 var b = property.GetValue(t1, null) == null ? "" : property.GetValue(t2, null).ToString();
                 if (a != b) return false;
-
             }
 
             return true;

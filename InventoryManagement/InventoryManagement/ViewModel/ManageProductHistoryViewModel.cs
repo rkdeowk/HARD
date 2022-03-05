@@ -4,20 +4,66 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Text;
+using System.Windows;
+using System.Windows.Input;
 
 namespace InventoryManagement.ViewModel
 {
     public class ManageProductHistoryViewModel : ObservableObject
     {
+        #region [ Command ]
+
+        private ICommand _deleteCommand;
+        public ICommand DeleteCommand
+        {
+            get { return (_deleteCommand) ?? (_deleteCommand = new RelayCommand(Delete)); }
+        }
+
+        private ICommand _saveCommand;
+        public ICommand SaveCommand
+        {
+            get { return (_saveCommand) ?? (_saveCommand = new RelayCommand(Save)); }
+        }
+
+        #endregion
+
         #region [ Binding ]
 
-        private ObservableCollection<Sensor> _dgData;
-        public ObservableCollection<Sensor> dgData
+        private ObservableCollection<History> _dgData;
+        public ObservableCollection<History> dgData
         {
             get { return _dgData; }
             set
             {
                 _dgData = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private History _selectedDgData;
+        public History selectedDgData
+        {
+            get { return _selectedDgData; }
+            set
+            {
+                if (value is null) return;
+
+                Name = value.Name;
+                SerialNum = value.SerialNum;
+                Location = value.Location;
+                Maker = value.Maker;
+                EquipName = value.EquipName;
+                EquipID = value.EquipID;
+                ReceivingDay = value.ReceivingDay;
+                Description = value.Description;
+                MacAddress = value.MacAddress;
+                ViewerVersion = value.ViewerVersion;
+                AppVersion = value.AppVersion;
+                SOMVersion = value.AppVersion;
+                Date = value.Date;
+
+                _selectedDgData = value;
                 OnPropertyChanged();
             }
         }
@@ -174,7 +220,7 @@ namespace InventoryManagement.ViewModel
 
         #endregion
 
-        public class Sensor
+        public class History
         {
             public string Name { get; set; }
             public string SerialNum { get; set; }
@@ -190,7 +236,7 @@ namespace InventoryManagement.ViewModel
             public string SOMVersion { get; set; }
             public string Date { get; set; }
 
-            public Sensor(string Name, string SerialNum, string Location, string Maker, string EquipName, string EquipID, string ReceivingDay, string Description, string MacAddress, string ViewerVersion, string AppVersion, string SOMVersion, string Date)
+            public History(string Name, string SerialNum, string Location, string Maker, string EquipName, string EquipID, string ReceivingDay, string Description, string MacAddress, string ViewerVersion, string AppVersion, string SOMVersion, string Date)
             {
                 this.Name = Name != null ? Name : "";
                 this.SerialNum = SerialNum != null ? SerialNum : "";
@@ -207,7 +253,7 @@ namespace InventoryManagement.ViewModel
                 this.Date = Date != null ? Date : "";
             }
 
-            public Sensor() { }
+            public History() { }
         }
 
         private List<string> history;
@@ -216,19 +262,17 @@ namespace InventoryManagement.ViewModel
         public ManageProductHistoryViewModel()
         {
             SerialNumber = "";
+
+            history = new List<string>();
         }
 
         public void GetHistoryData(string str)
         {
             SerialNumber = str;
 
-            if (!File.Exists(Log.GetHistoryLogPath(nameof(Sensor))))
+            if (File.Exists(Log.GetHistoryLogPath(nameof(History))))
             {
-                history = Log.ReadCsv(nameof(Sensor));
-            }
-            else
-            {
-                history = Log.ReadCsvHistory(nameof(Sensor));
+                history = Log.ReadCsvHistory(nameof(History));
             }
 
             BindingDataGrid();
@@ -236,17 +280,65 @@ namespace InventoryManagement.ViewModel
 
         private void BindingDataGrid()
         {
-            dgData = new ObservableCollection<Sensor>();
+            dgData = new ObservableCollection<History>();
 
             for (int i = 0; i < history.Count; i++)
             {
                 if (string.IsNullOrWhiteSpace(history[i])) continue;
-                var sensor = DataHandler.ConvertStringToProduct<Sensor>(history[i]);
+                
+                var sensor = DataHandler.ConvertStringToProduct<History>(history[i]);
                 if(sensor.SerialNum == SerialNumber)
                 {
                     dgData.Add(sensor);
                 }
             }
+        }
+
+        private void Delete()
+        {
+            if (DataHandler.CheckNull(selectedDgData))
+            {
+                MessageBox.Show("지울 파일을 선택해주세요");
+                return;
+            }
+
+            if (MessageBox.Show("History 내역만 삭제되고 본문에 반영 안됩니다.\n" +
+                "원본까지 수정하려면 본문에서 삭제하시기 바랍니다.\n" +
+                "History 내역만 정말 삭제하시겠습니까?", "정말로 삭제요?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                var str = new StringBuilder();
+
+                var propertyInfos = typeof(History).GetProperties();
+
+                foreach (var property in propertyInfos)
+                {
+                    var a = property.GetValue(selectedDgData, null) == null ? "" : property.GetValue(selectedDgData, null).ToString();
+                    str.Append(a);
+                    str.Append(",");
+                }
+
+                str.Remove(str.Length - 1, 1);
+
+                for(int i = 0; i < history.Count; i++)
+                {
+                    if(str.ToString() == history[i])
+                    {
+                        history.RemoveAt(i);
+                        break;
+                    }
+                }
+
+                dgData.Remove(selectedDgData);
+                
+                selectedDgData = new History();
+            }
+        }
+
+        private void Save()
+        {
+            Log.WriteLog(nameof(History), history);
+
+            MessageBox.Show("Saved");
         }
     }
 }

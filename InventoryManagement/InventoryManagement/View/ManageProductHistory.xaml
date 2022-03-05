@@ -4,12 +4,31 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="ManageProductHistory" Height="450" Width="800">
+        Title="ManageProductHistory" Height="500" Width="800">
     <Grid>
-        
-        <DataGrid Margin="5" x:Name="dataGrid"
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Margin="5" Grid.Column="0" Content="Delete" Command="{Binding DeleteCommand}"/>
+            <Button Margin="5" Grid.Column="1" Content="Save" Command="{Binding SaveCommand}"/>
+
+        </Grid>
+
+        <DataGrid Grid.Row="1"
+                  Margin="5" 
                   AutoGenerateColumns="False"
                   ItemsSource="{Binding dgData}"
+                  SelectedItem="{Binding selectedDgData}"
                   SelectionMode="Single"
                   IsReadOnly="True">
 
@@ -30,6 +49,6 @@
             </DataGrid.Columns>
 
         </DataGrid>
-        
+
     </Grid>
 </Window>
