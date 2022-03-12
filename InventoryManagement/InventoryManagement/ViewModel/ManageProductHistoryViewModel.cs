@@ -302,9 +302,9 @@ namespace InventoryManagement.ViewModel
                 return;
             }
 
-            if (MessageBox.Show("History 내역만 삭제되고 본문에 반영 안됩니다.\n" +
-                "원본까지 수정하려면 본문에서 삭제하시기 바랍니다.\n" +
-                "History 내역만 정말 삭제하시겠습니까?", "정말로 삭제요?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show("※ History 내역만 삭제되고 본문에 반영 안됩니다. ※\n\n" +
+                "※ 원본까지 수정하려면 본문에서 삭제하시기 바랍니다. ※\n\n" +
+                "History 내역만 삭제하시겠습니까?", "정말로 삭제요?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 var str = new StringBuilder();
 

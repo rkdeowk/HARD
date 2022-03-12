@@ -504,14 +504,12 @@ namespace InventoryManagement.ViewModel
             ManageProductHistory container = new ManageProductHistory()
             {
                 Title = $"{nameof(Sensor)} History",
-                Height = 500,
-                Width = 1300,
                 WindowStartupLocation = WindowStartupLocation.CenterScreen,
             };
 
             container.GetHistory(selectedDgData.SerialNum);
 
-            container.Show();
+            container.ShowDialog();
         }
     }
 }
