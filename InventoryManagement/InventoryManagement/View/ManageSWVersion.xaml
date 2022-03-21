@@ -105,7 +105,7 @@
                   IsReadOnly="True">
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Status" Binding="{Binding Date}"/>
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status}"/>
                     <DataGridTextColumn Header="Software" Binding="{Binding Software}"/>
                     <DataGridTextColumn Header="Version" Binding="{Binding Version}"/>
                     <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
