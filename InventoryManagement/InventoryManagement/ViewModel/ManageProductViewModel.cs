@@ -92,7 +92,7 @@ namespace InventoryManagement.ViewModel
                 MacAddress = value.MacAddress;
                 ViewerVersion = value.ViewerVersion;
                 AppVersion = value.AppVersion;
-                SOMVersion = value.AppVersion;
+                SOMVersion = value.SOMVersion;
 
                 _selectedDgData = value;
                 OnPropertyChanged();
@@ -429,22 +429,6 @@ namespace InventoryManagement.ViewModel
                     {
                         ori = original[i];
                         original.RemoveAt(i);
-                    }
-                }
-
-                for (int i = 0; i < history.Count; i++)
-                {
-                    if (history[i].Length == 0) continue;
-
-                    var info = ori;
-                    var str = history[i].Split(',');
-                    int idx = 0;
-                    if (info.Name == str[idx++] && info.SerialNum == str[idx++] && info.Location == str[idx++] && info.Maker == str[idx++] && info.EquipName == str[idx++] &&
-                        info.EquipID == str[idx++] && info.ReceivingDay == str[idx++] && info.Description == str[idx++] && info.MacAddress == str[idx++] && info.ViewerVersion == str[idx++] &&
-                        info.AppVersion == str[idx++] && info.SOMVersion == str[idx++])
-                    {
-                        history.RemoveAt(i);
-                        break;
                     }
                 }
 
