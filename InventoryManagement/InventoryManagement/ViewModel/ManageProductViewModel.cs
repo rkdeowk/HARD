@@ -334,9 +334,9 @@ namespace InventoryManagement.ViewModel
 
             BindingDataGrid();
 
-            if (File.Exists(Log.GetHistoryLogPath(nameof(Sensor))))
+            if (File.Exists(Log.GetHistoryLogPath(nameof(History))))
             {
-                history = Log.ReadCsvHistory(nameof(Sensor));
+                history = Log.ReadCsvHistory(nameof(History));
             }
         }
 
