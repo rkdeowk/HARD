@@ -24,7 +24,6 @@ namespace InventoryManagement.Data
 
         public static void MakeLogDir()
         {
-            Directory.CreateDirectory($@"{Environment.CurrentDirectory}\backupLog");
             Directory.CreateDirectory($@"{Environment.CurrentDirectory}\historyLog");
         }
 

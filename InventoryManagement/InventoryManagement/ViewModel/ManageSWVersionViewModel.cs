@@ -2,6 +2,7 @@
 using InventoryManagement.Data;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -226,6 +227,8 @@ namespace InventoryManagement.ViewModel
                 dgData.Add(DataHandler.ConvertStringToProduct<SWVersion>(data[i]));
                 original.Add(DataHandler.ConvertStringToProduct<SWVersion>(data[i]));
             }
+
+            dgData = SortDGData(dgData);
         }
 
         private void init()
@@ -263,6 +266,8 @@ namespace InventoryManagement.ViewModel
 
             dgData.Add(product);
             original.Add(product);
+
+            dgData = SortDGData(dgData);
         }
 
         private void Save()
@@ -321,6 +326,11 @@ namespace InventoryManagement.ViewModel
         private void Refresh()
         {
             BindingDataGrid();
+        }
+
+        private ObservableCollection<SWVersion> SortDGData(ObservableCollection<SWVersion> data)
+        {
+            return new ObservableCollection<SWVersion>(data.OrderByDescending(x => x.Status));
         }
     }
 }
