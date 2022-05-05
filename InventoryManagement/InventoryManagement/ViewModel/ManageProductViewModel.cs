@@ -399,7 +399,7 @@ namespace InventoryManagement.ViewModel
             original.Add(product);
 
             PropertyInfo[] fields = typeof(Sensor).GetProperties(BindingFlags.Instance | BindingFlags.Public);
-            history.Add(DataHandler.ToCsvProperty(",", fields, product));
+            history.Insert(0, DataHandler.ToCsvProperty(",", fields, product));
         }
 
         private void Save()

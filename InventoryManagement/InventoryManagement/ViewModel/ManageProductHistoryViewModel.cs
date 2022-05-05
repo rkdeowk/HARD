@@ -285,9 +285,9 @@ namespace InventoryManagement.ViewModel
             for (int i = 0; i < history.Count; i++)
             {
                 if (string.IsNullOrWhiteSpace(history[i])) continue;
-                
+
                 var sensor = DataHandler.ConvertStringToProduct<History>(history[i]);
-                if(sensor.SerialNum == SerialNumber)
+                if (sensor.SerialNum == SerialNumber)
                 {
                     dgData.Add(sensor);
                 }
@@ -319,9 +319,9 @@ namespace InventoryManagement.ViewModel
 
                 str.Remove(str.Length - 1, 1);
 
-                for(int i = 0; i < history.Count; i++)
+                for (int i = 0; i < history.Count; i++)
                 {
-                    if(str.ToString() == history[i])
+                    if (str.ToString() == history[i])
                     {
                         history.RemoveAt(i);
                         break;
@@ -329,7 +329,7 @@ namespace InventoryManagement.ViewModel
                 }
 
                 dgData.Remove(selectedDgData);
-                
+
                 selectedDgData = new History();
             }
         }
