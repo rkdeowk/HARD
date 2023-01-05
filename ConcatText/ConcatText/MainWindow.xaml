@@ -1,0 +1,25 @@
+﻿<Window x:Class="ConcatText.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ConcatText"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="300" Width="600">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel>
+            <TextBlock Text="{Binding FolderPath}"/>
+            <ListView Grid.Row="2" ItemsSource="{Binding FileList}"/>
+        </StackPanel>
+        
+        <StackPanel Grid.Column="1">
+            <Button Content="Open Folder" Command="{Binding OpenFolderCommand}"/>
+            <Button Content="Start" Command="{Binding StartCommand}"/>
+        </StackPanel>
+    </Grid>
+</Window>
