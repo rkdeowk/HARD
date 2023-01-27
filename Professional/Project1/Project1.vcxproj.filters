@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일\Problem">
+      <UniqueIdentifier>{e9eb556b-86a1-45d1-8e5f-79324bd2ab15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\Input">
+      <UniqueIdentifier>{8b1cf8ca-638c-45b8-87f7-0f4e9e957448}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="user.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="reference.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="exercise.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="31. 최대최소값 찾기.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="30. 항공노선관리.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="29. 블록제거게임.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="28. 자유무역협정.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="27. 조별경기.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="26. 사물함배정.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="25. 인플루언서.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="24. 일정관리4.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="23. 물류허브.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="22. 개발협업도구.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="21. 평면의 조각.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="20. 회의관리.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="19. 생산기계.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="18. 마법문자열.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="17. 모든페어찾기.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="16. 호텔검색서비스.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="15. 로그인대기열.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="14. 주차장.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="13. DNA Sequence.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="12. 생존열차.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="11. 주가변동.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="10. 삼국지게임.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="9. 미생물.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="8. 성적조회.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="7. 메모리 시스템.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="6. 단어검색.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="5. 워드 프로세서.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="4. 메모장 프로그램.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="2. 병사관리.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="1. 도서관 정리.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="3. 앱평가.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+    <ClCompile Include="0.1 친구 추천.cpp">
+      <Filter>리소스 파일\Problem</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="sample_input.txt">
+      <Filter>소스 파일</Filter>
+    </Text>
+    <Text Include="최대최소값 찾기.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="항공노선관리.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="블록제거게임.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="자유무역협정.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="조별경기.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="사물함배정.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="인플루언서.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="일정관리4.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="물류허브.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="개발협업도구.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="평면의 조각.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="회의관리.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="생산기계.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="마법문자열.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="모든페어찾기.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="호텔검색서비스.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="로그인대기열.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="주차장.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="DNA Sequence.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="생존열차.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="주가변동.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="삼국지게임.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="미생물.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="성적조회.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="메모리 시스템.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="단어검색.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="워드 프로세서.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="메모장 프로그램.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="병사관리.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="도서관 정리.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="앱평가.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+    <Text Include="친구 추천.txt">
+      <Filter>리소스 파일\Input</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

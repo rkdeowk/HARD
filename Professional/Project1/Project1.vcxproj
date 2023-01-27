@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{188da5eb-6c1f-4c73-bef0-a3f51c36e720}</ProjectGuid>
+    <RootNamespace>Project1</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="0.1 친구 추천.cpp" />
+    <ClCompile Include="13. DNA Sequence.cpp" />
+    <ClCompile Include="exercise.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="reference.cpp" />
+    <ClCompile Include="user.cpp" />
+    <ClCompile Include="22. 개발협업도구.cpp" />
+    <ClCompile Include="6. 단어검색.cpp" />
+    <ClCompile Include="1. 도서관 정리.cpp" />
+    <ClCompile Include="15. 로그인대기열.cpp" />
+    <ClCompile Include="18. 마법문자열.cpp" />
+    <ClCompile Include="7. 메모리 시스템.cpp" />
+    <ClCompile Include="4. 메모장 프로그램.cpp" />
+    <ClCompile Include="17. 모든페어찾기.cpp" />
+    <ClCompile Include="23. 물류허브.cpp" />
+    <ClCompile Include="9. 미생물.cpp" />
+    <ClCompile Include="2. 병사관리.cpp" />
+    <ClCompile Include="29. 블록제거게임.cpp" />
+    <ClCompile Include="26. 사물함배정.cpp" />
+    <ClCompile Include="10. 삼국지게임.cpp" />
+    <ClCompile Include="19. 생산기계.cpp" />
+    <ClCompile Include="12. 생존열차.cpp" />
+    <ClCompile Include="8. 성적조회.cpp" />
+    <ClCompile Include="3. 앱평가.cpp" />
+    <ClCompile Include="5. 워드 프로세서.cpp" />
+    <ClCompile Include="25. 인플루언서.cpp" />
+    <ClCompile Include="24. 일정관리4.cpp" />
+    <ClCompile Include="28. 자유무역협정.cpp" />
+    <ClCompile Include="27. 조별경기.cpp" />
+    <ClCompile Include="11. 주가변동.cpp" />
+    <ClCompile Include="14. 주차장.cpp" />
+    <ClCompile Include="31. 최대최소값 찾기.cpp" />
+    <ClCompile Include="21. 평면의 조각.cpp" />
+    <ClCompile Include="30. 항공노선관리.cpp" />
+    <ClCompile Include="16. 호텔검색서비스.cpp" />
+    <ClCompile Include="20. 회의관리.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="DNA Sequence.txt" />
+    <Text Include="sample_input.txt" />
+    <Text Include="개발협업도구.txt" />
+    <Text Include="단어검색.txt" />
+    <Text Include="도서관 정리.txt" />
+    <Text Include="로그인대기열.txt" />
+    <Text Include="마법문자열.txt" />
+    <Text Include="메모리 시스템.txt" />
+    <Text Include="메모장 프로그램.txt" />
+    <Text Include="모든페어찾기.txt" />
+    <Text Include="물류허브.txt" />
+    <Text Include="미생물.txt" />
+    <Text Include="병사관리.txt" />
+    <Text Include="블록제거게임.txt" />
+    <Text Include="사물함배정.txt" />
+    <Text Include="삼국지게임.txt" />
+    <Text Include="생산기계.txt" />
+    <Text Include="생존열차.txt" />
+    <Text Include="성적조회.txt" />
+    <Text Include="앱평가.txt" />
+    <Text Include="워드 프로세서.txt" />
+    <Text Include="인플루언서.txt" />
+    <Text Include="일정관리4.txt" />
+    <Text Include="자유무역협정.txt" />
+    <Text Include="조별경기.txt" />
+    <Text Include="주가변동.txt" />
+    <Text Include="주차장.txt" />
+    <Text Include="최대최소값 찾기.txt" />
+    <Text Include="친구 추천.txt" />
+    <Text Include="평면의 조각.txt" />
+    <Text Include="항공노선관리.txt" />
+    <Text Include="호텔검색서비스.txt" />
+    <Text Include="회의관리.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
